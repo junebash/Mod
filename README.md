@@ -23,13 +23,46 @@ let button: UIButton = {
 
 At its base, the `Mod` type is just a wrapper around a closure that applies a modification to a provided item. But it can also provide a convenient namespace and API for reusability and composition of stylings. It even comes with some custom operators that make for a convenient and readable DSL.
 ```
-extension Mod where Item: UIButton {
-  static func shadow(/* ... */) -> Mod {
-    Mod { /* ... */ }
+extension Mod where Item: UIView {
+  static func shadow(
+    radius: CGFloat = 1,
+    offset: CGSize = CGSize(width: 0, height: 1),
+    color: UIColor = UIColor.black,
+    opacity: Float = 0.6
+  ) -> Self {
+    Mod {
+      $0.layer.shadowRadius = radius
+      $0.layer.shadowColor = color.cgColor
+      $0.layer.shadowOffset = offset
+      $0.layer.shadowOpacity = opacity
+    }
   }
-  static func roundedCorners(radius: CGFloat = 8) -> Mod {}
-  static func border(color: UIColor = .black, width: CGFloat = 1) -> Mod {}
-  static func title(_ titleText: String) -> Mod { /* ... */ }
+
+  static func border(
+    color: UIColor?,
+    width: CGFloat = 1
+  ) -> Self {
+    Mod {
+      $0.layer.borderColor = color?.cgColor
+      $0.layer.borderWidth = width
+    }
+  }
+
+  static func roundedCorners(
+    radius: CGFloat = 8,
+    curve: CALayerCornerCurve = .continuous
+  ) -> Self {
+    Mod {
+      $0.layer.cornerRadius = radius
+      $0.layer.cornerCurve = curve
+    }
+  }
+}
+
+extension Mod where Item: UIButton {
+  static func title(_ text: String) -> Self {
+    Mod { $0.setTitle(text, for: .normal) }
+  }
 }
 
 let button = UIButton()
