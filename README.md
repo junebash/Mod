@@ -6,7 +6,7 @@ What does that mean?
 
 I'm sure you've gone through the pain of using UIKit, writing tons of subclasses, writing the same or similar boilerplate in all your view controllers.
 
-```
+```swift
 let button: UIButton = {
   let b = UIButton()
   b.setTitle("Button", for: .normal)
@@ -22,7 +22,8 @@ let button: UIButton = {
 `Mod` provides an easy way to break apart your various view styles (or other modifiers) into reusable components that can be mixed and matched.
 
 At its base, the `Mod` type is just a wrapper around a closure that applies a modification to a provided item. But it can also provide a convenient namespace and API for reusability and composition of stylings. It even comes with some custom operators that make for a convenient and readable DSL.
-```
+
+```swift
 extension Mod where Item: UIView {
   static func shadow(
     radius: CGFloat = 1,
@@ -71,8 +72,10 @@ let button = UIButton()
   <> .roundedCorners()
   <> .shadow()
 ```
+
 Alternatively, if you're allergic to new operators:
-```
+
+```swift
 let button = Mod.concatenate(
   .title("Button"),
   .border(color: .black),
@@ -80,8 +83,10 @@ let button = Mod.concatenate(
   .shadow()
 ).applied(to: UIButton())
 ```
+
 or
-```
+
+```swift
 let button = configure(UIButton(), with: .concatenate(
   .title("Button"),
   .border(color: .black),
