@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Mod.playground">
-   </FileRef>
-   <FileRef
-      location = "group:Mod.xcodeproj">
+      location = "self:">
    </FileRef>
 </Workspace>
